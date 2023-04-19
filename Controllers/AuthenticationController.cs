@@ -1,5 +1,7 @@
 using AuthReference.DTO;
+using AuthReference.Models;
 using Microsoft.AspNetCore.Mvc;
+using SecureIdentity.Password;
 
 namespace AuthReference;
 
@@ -13,6 +15,15 @@ public class AuthenticationController : ControllerBase
       if (!ModelState.IsValid)
          return BadRequest();
 
-      return Ok(model);
+      var user = new User
+      {
+         Name = "Sidney",
+         Email = model.Email
+      };
+
+      var password = PasswordGenerator.Generate(15);
+      user.Password = PasswordHasher.Hash(password);
+
+      return Ok(user);
    }
 }
