@@ -1,13 +1,18 @@
+using AuthReference.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthReference;
 
 [ApiController]
+[Route("auth")]
 public class AuthenticationController : ControllerBase
 {
    [HttpPost]
-   public IActionResult CreateAccount()
+   public IActionResult CreateAccount([FromBody] RegisterDTO model)
    {
-      return Ok();
+      if (!ModelState.IsValid)
+         return BadRequest();
+
+      return Ok(model);
    }
 }
