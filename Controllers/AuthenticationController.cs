@@ -20,7 +20,18 @@ public class AuthenticationController : ControllerBase
       var user = new User
       {
          Name = model.Name,
-         Email = model.Email
+         Email = model.Email,
+         Roles = new List<Role>()
+         {
+            new Role()
+            {
+               Name = "admin"
+            },
+            new Role()
+            {
+               Name = "author"
+            }
+         }
       };
 
       var password = PasswordGenerator.Generate(15);
@@ -41,7 +52,18 @@ public class AuthenticationController : ControllerBase
       {
          Name = "beltrano",
          Email = model.Email,
-         Password = model.Password
+         Password = model.Password,
+         Roles = new List<Role>()
+         {
+            new Role()
+            {
+               Name = "admin"
+            },
+            new Role()
+            {
+               Name = "author"
+            }
+         }
       };
 
       var token = tokenService.GenerateToken(user);

@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AuthReference.Extensions;
 using AuthReference.Models;
 using Microsoft.IdentityModel.Tokens;
 
@@ -24,10 +25,10 @@ public class TokenService
    {
       var tokenHandler = new JwtSecurityTokenHandler();
       var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-      var claims = mockClaims();
+      var claims = user.GetClaims();
       var tokenDescriptor = new SecurityTokenDescriptor()
       {
-         Subject = claims,
+         Subject = new ClaimsIdentity(claims),
          Expires = DateTime.UtcNow.AddHours(3),
          SigningCredentials = new SigningCredentials(
             new SymmetricSecurityKey(key),
