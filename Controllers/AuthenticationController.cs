@@ -19,7 +19,7 @@ public class AuthenticationController : ControllerBase
 
       var user = new User
       {
-         Name = "Sidney",
+         Name = model.Name,
          Email = model.Email
       };
 
