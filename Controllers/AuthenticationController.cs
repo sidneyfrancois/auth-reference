@@ -30,9 +30,21 @@ public class AuthenticationController : ControllerBase
    }
 
    [HttpPost("login")]
-   public IActionResult Login([FromServices] TokenService tokenService)
+   public IActionResult Login(
+      [FromServices] TokenService tokenService,
+      [FromBody] LoginDTO model)
    {
-      var token = tokenService.GenerateToken(null);
+      if (!ModelState.IsValid)
+         return BadRequest();
+
+      var user = new User
+      {
+         Name = "beltrano",
+         Email = model.Email,
+         Password = model.Password
+      };
+
+      var token = tokenService.GenerateToken(user);
       return Ok(token);
    }
 
